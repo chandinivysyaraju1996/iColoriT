@@ -127,7 +127,12 @@ def main(args):
     args.patch_size = patch_size
 
     model.to(device)
-    checkpoint = torch.load(args.model_path, map_location='cpu')
+    # Handle PyTorch 2.6+ weights_only parameter
+    try:
+        checkpoint = torch.load(args.model_path, map_location='cpu', weights_only=False)
+    except TypeError:
+        # For older PyTorch versions that don't have weights_only parameter
+        checkpoint = torch.load(args.model_path, map_location='cpu')
     model.load_state_dict(checkpoint['model'])
     model.eval()
 
@@ -182,11 +187,13 @@ def main(args):
                             img_save_dir, osp.splitext(name)[0] + '.png'))
                 pbar.update()
             total_shown += B
-            pbar.set_postfix({'psnr@10': psnr_sum.get(10) / total_shown})
+            first_hint = args.val_hint_list[0]
+            pbar.set_postfix({f'psnr@{first_hint}': psnr_sum.get(first_hint) / total_shown})
         pbar.close()
 
     print(f'Total shown: {total_shown}')
-    print(f'PSNR {10}: {psnr_sum[10]/total_shown}')
+    for count in args.val_hint_list:
+        print(f'PSNR @{count}: {psnr_sum[count]/total_shown}')
 
 
 

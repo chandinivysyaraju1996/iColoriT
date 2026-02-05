@@ -1,8 +1,8 @@
 # iColoriT Demo Software 🎨
 
-We provide a GUI which can run on CPU-only devices as well as devices with a GPU. 
+We provide a GUI which can run on CPU-only devices as well as devices with a GPU.
 
-Try out iColoriT with your own images and color hints! 
+Try out iColoriT with your own images and color hints!
 
 <p align="center">
   <img width="90%" src="../docs/iColoriT_demo.gif">
@@ -12,16 +12,16 @@ Try out iColoriT with your own images and color hints!
 
 Checkpoints for iColoriT models are available in the links below.
 
-|  	| Backbone 	| Link 	|
-|:---:	|:---:	|:---:	|
-| iColoriT	| ViT-B 	| [iColoriT (Google Drive)](https://drive.google.com/file/d/16i9ulB4VRbFLbLlAa7UjIQR6J334BeKW/view?usp=sharing)	|
-| iColoriT-S 	| ViT-S 	| [iColoriT-S (Google Drive)](https://drive.google.com/file/d/1yKwFTQGDBvr9B7NIyXhxQH0K-BNlCs4L/view?usp=sharing) 	|
-| iColoriT-T 	| ViT-Ti 	| [iColoriT-T (Google Drive)](https://drive.google.com/file/d/1GMmjfxAoM95cABwlZD8555WxI7nmIZrR/view?usp=sharing)	|
-
+|            | Backbone |                                                      Link                                                       |
+| :--------: | :------: | :-------------------------------------------------------------------------------------------------------------: |
+|  iColoriT  |  ViT-B   |  [iColoriT (Google Drive)](https://drive.google.com/file/d/16i9ulB4VRbFLbLlAa7UjIQR6J334BeKW/view?usp=sharing)  |
+| iColoriT-S |  ViT-S   | [iColoriT-S (Google Drive)](https://drive.google.com/file/d/1yKwFTQGDBvr9B7NIyXhxQH0K-BNlCs4L/view?usp=sharing) |
+| iColoriT-T |  ViT-Ti  | [iColoriT-T (Google Drive)](https://drive.google.com/file/d/1GMmjfxAoM95cABwlZD8555WxI7nmIZrR/view?usp=sharing) |
 
 ## Installation
 
 Our code is implemented in Python 3.8, torch>=1.8.2, and PyQt5
+
 ```
 git clone https://github.com/pmh9960/iColoriT.git
 pip install -r requirements.txt
@@ -32,9 +32,8 @@ pip install -r requirements.txt
 Once you have satisfied all the requirements, you can run the base iColoriT model by executing
 
 ```
-python3 icolorit_ui.py --model_path <path/to/checkpoint> --target_image <path/to/image>
+python3 icolorit_ui.py --model_path /Users/chandinivysyaraju/Documents/Thesis/iColoriT-main/checkpoints/icolorit_base_4ch_patch16_224.pth --target_image /Users/chandinivysyaraju/Documents/Thesis/iColoriT-main/Test/Test/egypt_01.jpg
 ```
-
 
 <p align="center">
   <img width="70%" src="../docs/ui_example.png">
@@ -44,15 +43,15 @@ python3 icolorit_ui.py --model_path <path/to/checkpoint> --target_image <path/to
 
 <ul>
 
-<li> Left click on Drawing Pad to select the hint location. 
+<li> Left click on Drawing Pad to select the hint location.
 
 <li> Left click on the ab Color Gamut to select a color.
 
 <li> Right click on a hint location to undo the click.
 
-<li> Press <em>Restart</em> to undo all hints. 
+<li> Press <em>Restart</em> to undo all hints.
 
-<li> Press <em>Save</em> to save the colorized image. 
+<li> Press <em>Save</em> to save the colorized image.
 
 <li> Press <em>Load</em> to load another image.
 

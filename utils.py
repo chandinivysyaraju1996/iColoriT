@@ -22,7 +22,12 @@ import torch
 import torch.distributed as dist
 from tensorboardX import SummaryWriter
 from timm.utils import get_state_dict
-from torch._six import inf
+
+# Handle torch._six compatibility for PyTorch >= 2.0
+try:
+    from torch._six import inf
+except ImportError:
+    inf = float('inf')
 
 ####################################### Utils #######################################
 

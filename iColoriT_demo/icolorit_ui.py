@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     model = get_model(args)
     model.to(args.device)
-    checkpoint = torch.load(args.model_path, map_location='cpu')
+    checkpoint = torch.load(args.model_path, map_location='cpu', weights_only=False)
     model.load_state_dict(checkpoint['model'])
     model.eval()
 

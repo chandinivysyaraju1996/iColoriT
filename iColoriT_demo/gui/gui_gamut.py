@@ -35,8 +35,8 @@ class GUIGamut(QWidget):
         if pos is None or self.mask is None:
             return False
         else:
-            x = pos.x()
-            y = pos.y()
+            x = int(pos.x())
+            y = int(pos.y())
             if x >= 0 and y >= 0 and x < self.win_size and y < self.win_size:
                 return self.mask[y, x]
             else:
@@ -69,8 +69,8 @@ class GUIGamut(QWidget):
         if self.pos is not None:
             painter.setPen(QPen(Qt.black, 2, Qt.SolidLine, cap=Qt.RoundCap, join=Qt.RoundJoin))
             w = 5
-            x = self.pos.x()
-            y = self.pos.y()
+            x = int(self.pos.x())
+            y = int(self.pos.y())
             painter.drawLine(x - w, y, x + w, y)
             painter.drawLine(x, y - w, x, y + w)
         painter.end()

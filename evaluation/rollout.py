@@ -33,7 +33,7 @@ def rollout(attentions, discard_ratio, head_fusion, token_idx):
     # and the image patches
     # mask = result[0, token_idx, :]
     mask = result[0, :, token_idx]
-    # In case of 224x224 image, this brings us from 196 to 14
+    # Reshape mask to 2D grid (e.g., 512x512 image with 16x16 patches -> 32x32 grid)
     width = int(mask.size(-1)**0.5)
     mask = mask.reshape(width, width).numpy()
     mask = mask / np.max(mask)

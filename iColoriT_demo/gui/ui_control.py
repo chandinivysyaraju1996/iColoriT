@@ -12,7 +12,7 @@ class UserEdit(object):
         self.load_size = load_size
         print('image_size', self.img_size)
         max_width = np.max(self.img_size)
-        self.scale = float(max_width) / self.load_size # original image to 224 ration
+        self.scale = float(max_width) / self.load_size # original image to load_size ratio
         self.dw = int((self.win_size - img_size[0]) // 2)
         self.dh = int((self.win_size - img_size[1]) // 2)
         self.img_w = img_size[0]
@@ -86,7 +86,7 @@ class PointEdit(UserEdit):
 
 
 class UIControl:
-    def __init__(self, win_size=256, load_size=224):
+    def __init__(self, win_size=256, load_size=512):
         self.win_size = win_size
         self.load_size = load_size
         self.reset()

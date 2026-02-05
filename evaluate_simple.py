@@ -75,7 +75,7 @@ class GtPredImageDataset(Dataset):
         self.pred_files = pred_files
         
         self.tf = Compose([
-            Resize((224, 224)),
+            Resize((512, 512)),
             ToTensor()
         ])
     

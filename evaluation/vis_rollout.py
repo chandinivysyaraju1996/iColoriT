@@ -51,7 +51,7 @@ def get_args():
     parser.add_argument('--model_args_path', type=str, help='args.pkl path of model', default='')
 
     # Dataset parameters
-    parser.add_argument('--input_size', default=224, type=int, help='images input size for backbone')
+    parser.add_argument('--input_size', default=512, type=int, help='images input size for backbone')
     parser.add_argument('--batch_size', default=32, type=int)
     parser.add_argument('--num_workers', default=8, type=int)
     parser.add_argument('--pin_mem', action='store_true', help='Pin CPU memory in DataLoader')
@@ -59,7 +59,7 @@ def get_args():
     parser.set_defaults(pin_mem=True)
 
     # Model parameters
-    parser.add_argument('--model', default='icolorit_base_4ch_patch16_224', type=str, help='Name of model to inference')
+    parser.add_argument('--model', default='icolorit_base_4ch_patch16_512', type=str, help='Name of model to inference')
     parser.add_argument('--use_rpb', action='store_true', help='relative positional bias')
     parser.add_argument('--no_use_rpb', action='store_false', dest='use_rpb')
     parser.set_defaults(use_rpb=True)

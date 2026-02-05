@@ -42,7 +42,7 @@ def get_args():
     parser.add_argument('--save_args_txt', action='store_true', help='Save args as txt file')
 
     # Dataset
-    parser.add_argument('--input_size', default=224, type=int, help='images input size for backbone')
+    parser.add_argument('--input_size', default=512, type=int, help='images input size for backbone (longest side)')
     parser.add_argument('--data_path', default='data/train/images', type=str, help='dataset path')
     parser.add_argument('--val_data_path', default='data/val/images', type=str, help='validation dataset path')
     parser.add_argument('--val_hint_dir', type=str, help='hint directory for fixed validation', default='data/hint')
@@ -58,7 +58,7 @@ def get_args():
     parser.add_argument('--return_name', action='store_true', help='return name for saving (False for train)')
 
     # Model
-    parser.add_argument('--model', default='icolorit_base_4ch_patch16_224', type=str, help='Name of model to train')
+    parser.add_argument('--model', default='icolorit_base_4ch_patch16_512', type=str, help='Name of model to train')
     parser.add_argument('--use_rpb', action='store_true', help='relative positional bias')
     parser.add_argument('--no_use_rpb', action='store_false', dest='use_rpb')
     parser.set_defaults(use_rpb=True)

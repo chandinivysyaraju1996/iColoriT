@@ -24,7 +24,7 @@ class GUIDraw(QWidget):
     update_ab = pyqtSignal(object)
     update_result = pyqtSignal(object)
 
-    def __init__(self, model=None, load_size=224, win_size=512, device='cpu'):
+    def __init__(self, model=None, load_size=512, win_size=512, device='cpu'):
         QWidget.__init__(self)
         self.image_file = None
         self.pos = None

@@ -22,10 +22,46 @@ from utils import lab2rgb, psnr, rgb2lab, seed_worker
 from torchvision.transforms import Compose, Resize, ToTensor
 
 
+class ResizeKeepAspectRatio:
+    """
+    Resize image so that the longest side is max_size while preserving aspect ratio,
+    then pad to make the image square (max_size x max_size).
+    """
+    def __init__(self, max_size, pad_value=0):
+        self.max_size = max_size
+        self.pad_value = pad_value
+
+    def __call__(self, img):
+        # img is a PIL Image
+        w, h = img.size
+
+        # Calculate new size preserving aspect ratio
+        if w >= h:
+            new_w = self.max_size
+            new_h = int(h * self.max_size / w)
+        else:
+            new_h = self.max_size
+            new_w = int(w * self.max_size / h)
+
+        # Resize with aspect ratio preserved
+        img_resized = img.resize((new_w, new_h), Image.BILINEAR)
+
+        # Create a new square image with padding
+        new_img = Image.new('RGB', (self.max_size, self.max_size), (self.pad_value, self.pad_value, self.pad_value))
+
+        # Paste resized image at top-left
+        new_img.paste(img_resized, (0, 0))
+
+        return new_img
+
+    def __repr__(self):
+        return f"ResizeKeepAspectRatio(max_size={self.max_size}, pad_value={self.pad_value})"
+
+
 class SimpleImageDataset(Dataset):
     """Simple dataset for any images"""
-    
-    def __init__(self, img_dir, input_size=224):
+
+    def __init__(self, img_dir, input_size=512):
         self.img_dir = img_dir
         self.input_size = input_size
         
@@ -37,7 +73,7 @@ class SimpleImageDataset(Dataset):
         ])
         
         self.transform = Compose([
-            Resize((input_size, input_size)),
+            ResizeKeepAspectRatio(input_size),
             ToTensor(),
         ])
     
@@ -56,7 +92,7 @@ def get_args():
     parser.add_argument('--model_path', type=str, required=True, help='checkpoint path')
     parser.add_argument('--val_data_path', type=str, required=True, help='validation dataset path')
     parser.add_argument('--pred_dir', type=str, default='results/', help='output directory')
-    parser.add_argument('--input_size', default=224, type=int)
+    parser.add_argument('--input_size', default=512, type=int)
     parser.add_argument('--batch_size', default=2, type=int)
     parser.add_argument('--num_workers', default=0, type=int)
     parser.add_argument('--device', default='cpu', help='device')
@@ -68,9 +104,9 @@ def get_args():
 
 
 def get_model(args):
-    print(f"Creating model: icolorit_base_4ch_patch16_224")
+    print(f"Creating model: icolorit_base_4ch_patch16_512")
     model = create_model(
-        'icolorit_base_4ch_patch16_224',
+        'icolorit_base_4ch_patch16_512',
         pretrained=False,
         drop_path_rate=0.0,
         drop_block_rate=None,

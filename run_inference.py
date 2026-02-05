@@ -9,7 +9,7 @@ import sys
 import subprocess
 
 # Configuration
-CHECKPOINT_PATH = 'checkpoints/icolorit_base_4ch_patch16_224.pth'
+CHECKPOINT_PATH = 'checkpoints/icolorit_base_4ch_patch16_512.pth'
 VAL_DATA_PATH = 'validation/'
 VAL_HINT_DIR = 'ctest10k_hint/'
 PRED_DIR = 'results/'

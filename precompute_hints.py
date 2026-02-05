@@ -18,7 +18,7 @@ def get_args():
     parser.add_argument('--hint_size', type=int, default=2, help='Hint region size')
     parser.add_argument('--num_hints', type=int, nargs='+', default=[0, 1, 2, 5, 10, 20, 50, 100, 200],
                         help='Number of hints to generate')
-    parser.add_argument('--input_size', type=int, default=224, help='Input image size')
+    parser.add_argument('--input_size', type=int, default=512, help='Input image size (longest side)')
     parser.add_argument('--seed', type=int, default=42, help='Random seed for reproducibility')
 
     args = parser.parse_args()
@@ -71,7 +71,7 @@ def mask_to_coordinates(hint_mask, hint_size, input_size):
     Args:
         hint_mask: Binary mask at patch level [num_patches]
         hint_size: Size of each patch (e.g., 2 for 2x2)
-        input_size: Input image size (e.g., 224)
+        input_size: Input image size (e.g., 512)
 
     Returns:
         coords: List of (x, y) pixel coordinates

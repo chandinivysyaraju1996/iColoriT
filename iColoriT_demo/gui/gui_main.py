@@ -10,7 +10,7 @@ from .gui_vis import GUI_VIS
 
 
 class IColoriTUI(QWidget):
-    def __init__(self, color_model, img_file=None, load_size=224, win_size=256, device='cpu'):
+    def __init__(self, color_model, img_file=None, load_size=512, win_size=256, device='cpu'):
         # draw the layout
         QWidget.__init__(self)
 

@@ -20,10 +20,10 @@ def get_args():
     parser.add_argument('--device', default='cpu', help='device to use for testing')
 
     # Dataset parameters
-    parser.add_argument('--input_size', default=224, type=int, help='images input size for backbone')
+    parser.add_argument('--input_size', default=512, type=int, help='images input size for backbone')
 
     # Model parameters
-    parser.add_argument('--model', default='icolorit_base_4ch_patch16_224', type=str, help='Name of model to vis')
+    parser.add_argument('--model', default='icolorit_base_4ch_patch16_512', type=str, help='Name of model to vis')
     parser.add_argument('--drop_path', type=float, default=0.0, help='Drop path rate (default: 0.1)')
     parser.add_argument('--use_rpb', action='store_true', help='relative positional bias')
     parser.add_argument('--no_use_rpb', action='store_false', dest='use_rpb')

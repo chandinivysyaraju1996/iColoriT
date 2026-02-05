@@ -30,7 +30,7 @@ def max_neg_value(tensor):
 def _cfg(url='', **kwargs):
     return {
         'url': url,
-        'num_classes': 1000, 'input_size': (3, 224, 224), 'pool_size': None,
+        'num_classes': 1000, 'input_size': (3, 512, 512), 'pool_size': None,
         'crop_pct': .9, 'interpolation': 'bicubic',
         'mean': (0.5, 0.5, 0.5), 'std': (0.5, 0.5, 0.5),
         **kwargs
@@ -74,7 +74,7 @@ class Mlp(nn.Module):
 
 class Attention(nn.Module):
     def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0.,
-                 proj_drop=0., attn_head_dim=None, use_rpb=False, window_size=14):
+                 proj_drop=0., attn_head_dim=None, use_rpb=False, window_size=32):
         super().__init__()
         self.num_heads = num_heads
         head_dim = dim // num_heads
@@ -146,7 +146,7 @@ class Block(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
                  drop_path=0., init_values=None, act_layer=nn.GELU, norm_layer=nn.LayerNorm,
-                 attn_head_dim=None, use_rpb=False, window_size=14):
+                 attn_head_dim=None, use_rpb=False, window_size=32):
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.attn = Attention(
@@ -179,7 +179,7 @@ class PatchEmbed(nn.Module):
     """ Image to Patch Embedding
     """
 
-    def __init__(self, img_size=224, patch_size=16, in_chans=3, embed_dim=768, mask_cent=False):
+    def __init__(self, img_size=512, patch_size=16, in_chans=3, embed_dim=768, mask_cent=False):
         super().__init__()
         img_size = to_2tuple(img_size)
         patch_size = to_2tuple(patch_size)
@@ -260,7 +260,7 @@ class CnnHead(nn.Module):
 class LocalAttentionHead(nn.Module):
     def __init__(
             self, dim, out_dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0.,
-            proj_drop=0., attn_head_dim=None, use_rpb=False, window_size=14):
+            proj_drop=0., attn_head_dim=None, use_rpb=False, window_size=32):
         super().__init__()
         self.num_heads = num_heads
         head_dim = dim // num_heads
@@ -348,7 +348,7 @@ class IColoriT(nn.Module):
     """ Vision Transformer with support for patch or hybrid CNN input stage
     """
 
-    def __init__(self, img_size=224, patch_size=16, in_chans=3, num_classes=512, embed_dim=512, depth=12,
+    def __init__(self, img_size=512, patch_size=16, in_chans=3, num_classes=512, embed_dim=512, depth=12,
                  num_heads=12, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop_rate=0., attn_drop_rate=0.,
                  drop_path_rate=0., norm_layer=nn.LayerNorm, init_values=None,
                  use_rpb=False, avg_hint=False, head_mode='default', mask_cent=False):
@@ -452,7 +452,7 @@ class IColoriT(nn.Module):
             x = torch.cat((x, 1 - _full_mask), dim=1)
 
         x = self.patch_embed(x)
-        x = x + self.pos_embed.type_as(x).to(x.device).clone().detach()  # (B, 14*14, 768)
+        x = x + self.pos_embed.type_as(x).to(x.device).clone().detach()  # (B, 32*32, 768)
 
         for blk in self.blocks:
             x = blk(x)
@@ -467,10 +467,10 @@ class IColoriT(nn.Module):
 
 
 @register_model
-def icolorit_tiny_4ch_patch8_224(pretrained=False, **kwargs):
+def icolorit_tiny_4ch_patch8_512(pretrained=False, **kwargs):
     model = IColoriT(
         num_classes=128,
-        img_size=224,
+        img_size=512,
         patch_size=8,
         in_chans=4,
         embed_dim=192,
@@ -491,10 +491,10 @@ def icolorit_tiny_4ch_patch8_224(pretrained=False, **kwargs):
 
 
 @register_model
-def icolorit_tiny_4ch_patch16_224(pretrained=False, **kwargs):
+def icolorit_tiny_4ch_patch16_512(pretrained=False, **kwargs):
     model = IColoriT(
         num_classes=512,
-        img_size=224,
+        img_size=512,
         patch_size=16,
         in_chans=4,
         embed_dim=192,
@@ -515,10 +515,10 @@ def icolorit_tiny_4ch_patch16_224(pretrained=False, **kwargs):
 
 
 @register_model
-def icolorit_tiny_4ch_patch32_224(pretrained=False, **kwargs):
+def icolorit_tiny_4ch_patch32_512(pretrained=False, **kwargs):
     model = IColoriT(
         num_classes=2048,
-        img_size=224,
+        img_size=512,
         patch_size=32,
         in_chans=4,
         embed_dim=192,
@@ -539,9 +539,9 @@ def icolorit_tiny_4ch_patch32_224(pretrained=False, **kwargs):
 
 
 @register_model
-def icolorit_small_4ch_patch16_224(pretrained=False, **kwargs):
+def icolorit_small_4ch_patch16_512(pretrained=False, **kwargs):
     model = IColoriT(
-        img_size=224,
+        img_size=512,
         patch_size=16,
         in_chans=4,
         embed_dim=384,
@@ -562,10 +562,10 @@ def icolorit_small_4ch_patch16_224(pretrained=False, **kwargs):
 
 
 @register_model
-def icolorit_base_4ch_patch16_224(pretrained=False, **kwargs):
+def icolorit_base_4ch_patch16_512(pretrained=False, **kwargs):
     model = IColoriT(
         num_classes=512,
-        img_size=224,
+        img_size=512,
         patch_size=16,
         in_chans=4,
         embed_dim=768,
